@@ -3,9 +3,21 @@
   import { theme } from '$lib/stores/theme';
 
   let images = [
-    { src: '/images/image1.jpg', text: 'Image 1 description' },
-    { src: '/images/image2.jpg', text: 'Image 2 description' },
-    { src: '/images/image3.jpg', text: 'Image 3 description' }
+    { 
+      src: '/Død.png', 
+      text: 'Image 1 description',
+      alt: 'Detailed description of Død image'
+    },
+    { 
+      src: '/Konsumering.png', 
+      text: 'Image 2 description',
+      alt: 'Detailed description of Konsumering image'
+    },
+    { 
+      src: '/Risiko.png', 
+      text: 'Image 3 description',
+      alt: 'Detailed description of Risiko image'
+    }
   ];
 
   function toggleTheme() {
@@ -15,13 +27,13 @@
 
 <svelte:head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
 <nav>
   <div class="nav-content">
-    <h1>Infographic</h1>
+    <h1>Rusmisbruk</h1>
     <button class="theme-toggle" on:click={toggleTheme}>
       {#if $theme === 'light'}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -45,20 +57,10 @@
 </nav>
 
 <div class="container">
-  {#each images as { src, text }}
+  {#each images as { src, alt }}
     <div class="item">
       <div class="filler-box">
-        <img {src} alt={text} />
-        <div class="placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-        </div>
-      </div>
-      <div class="text-box">
-        <p>{text}</p>
+        <img {src} {alt} loading="lazy" />
       </div>
     </div>
   {/each}
@@ -68,7 +70,7 @@
   :global([data-theme="dark"]) {
     --bg-color: #1a1a1a;
     --text-color: #e0e0e0;
-    --item-bg: #2d2d2d;
+    --item-bg: #3a3a3a;
     --filler-bg: #363636;
     --shadow-color: rgba(0, 0, 0, 0.3);
     --placeholder-color: #666;
@@ -80,7 +82,7 @@
     --text-color: #4a4a4a;
     --item-bg: #ffffff;
     --filler-bg: #f0f2f5;
-    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.15);
     --placeholder-color: #9ba3af;
     --heading-color: #2d2d2d;
   }
@@ -147,79 +149,49 @@
     display: flex;
     flex-direction: column;
     gap: 64px;
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 120px 40px 60px 40px;
   }
 
   .item {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 60px;
     background-color: var(--item-bg);
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 4px 12px var(--shadow-color);
+    border-radius: 50px;
+    padding: 16px;
+    box-shadow: 0 2px 8px var(--shadow-color);
     transition: all 0.3s ease-in-out;
   }
 
   .item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 24px var(--shadow-color);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px var(--shadow-color);
   }
 
   .filler-box {
-    width: 400px;
-    height: 600px;
-    background: var(--filler-bg);
+    width: 650px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-  }
-
-  .placeholder {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--placeholder-color);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .filler-box:not(:has(img[src])) .placeholder,
-  .filler-box:has(img:not([src])) .placeholder {
-    opacity: 1;
+    transition: transform 0.3s ease;
   }
 
   img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     transition: transform 0.3s ease;
     position: relative;
-    z-index: 1;
   }
 
   img[src=""],
   img:not([src]) {
-    opacity: 0;
-  }
-
-  .text-box {
-    flex: 1;
-    padding: 20px;
-  }
-
-  .text-box p {
-    color: var(--text-color);
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin: 0;
-    font-weight: 400;
-    letter-spacing: 0.01em;
+    display: none;
   }
 </style>
